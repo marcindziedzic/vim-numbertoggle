@@ -11,24 +11,24 @@ let g:focus = 1
 let g:relativemode = 1
 
 " Enables relative numbers.
-function! EnableRelativeNumbers()
+function! EnableNumbers()
   set number
   set relativenumber
 endfunc
 
 " Disables relative numbers.
-function! DisableRelativeNumbers()
-  set number
+function! DisableNumbers()
+  set nonumber
   set norelativenumber
 endfunc
 
 " NumberToggle toggles between relative and absolute line numbers
 function! NumberToggle()
   if(&relativenumber == 1)
-    call DisableRelativeNumbers()
+    call DisableNumbers()
     let g:relativemode = 0
   else
-    call EnableRelativeNumbers()
+    call EnableNumbers()
     let g:relativemode = 1
   endif
 endfunc
@@ -39,11 +39,11 @@ function! UpdateMode()
   end
 
   if(g:focus == 0)
-    call DisableRelativeNumbers()
+    call DisableNumbers()
   elseif(g:insertmode == 0 && g:relativemode == 1)
-    call EnableRelativeNumbers()
+    call EnableNumbers()
   else
-    call DisableRelativeNumbers()
+    call DisableNumbers()
   end
 
   if !exists("&numberwidth") || &numberwidth <= 4
@@ -59,48 +59,11 @@ function! UpdateMode()
   endif
 endfunc
 
-function! FocusGained()
-  let g:focus = 1
-  call UpdateMode()
-endfunc
-
-function! FocusLost()
-  let g:focus = 0
-  call UpdateMode()
-endfunc
-
-function! InsertLeave()
-  let g:insertmode = 0
-  call UpdateMode()
-endfunc
-
-function! InsertEnter()
-  let g:insertmode = 1
-  call UpdateMode()
-endfunc
-
 " Automatically set relative line numbers when opening a new document
 autocmd BufNewFile * :call UpdateMode()
 autocmd BufReadPost * :call UpdateMode()
 autocmd FilterReadPost * :call UpdateMode()
 autocmd FileReadPost * :call UpdateMode()
-
-" Automatically switch to absolute numbers when focus is lost and switch back
-" when the focus is regained.
-autocmd FocusLost * :call FocusLost()
-autocmd FocusGained * :call FocusGained()
-autocmd WinLeave * :call FocusLost()
-autocmd WinEnter * :call FocusGained()
-
-" Switch to absolute line numbers when the window loses focus and switch back
-" to relative line numbers when the focus is regained.
-autocmd WinLeave * :call FocusLost()
-autocmd WinEnter * :call FocusGained()
-
-" Switch to absolute line numbers when entering insert mode and switch back to
-" relative line numbers when switching back to normal mode.
-autocmd InsertEnter * :call InsertEnter()
-autocmd InsertLeave * :call InsertLeave()
 
 " ensures default behavior / backward compatibility
 if ! exists ( 'g:UseNumberToggleTrigger' )
@@ -110,5 +73,5 @@ endif
 if exists('g:NumberToggleTrigger')
   exec "nnoremap <silent> " . g:NumberToggleTrigger . " :call NumberToggle()<cr>"
 elseif g:UseNumberToggleTrigger
-  nnoremap <silent> <C-n> :call NumberToggle()<cr>
+  nnoremap <F2> :call NumberToggle()<cr>
 endif
