@@ -1,12 +1,11 @@
 *numbertoggle.txt*	(auto-)toggling for Vim line numbers
 
-Author:  Jeff Kreeftmeijer <http://jeffkreeftmeijer.com>
+Original Author:  Jeff Kreeftmeijer <http://jeffkreeftmeijer.com>
+Author of the fork:  Marcin Dziedzic <http://pragmaticcoders.com>
 
 INTRODUCTION                                    *numbertoggle*
 
-numbertoggle cleverly toggles between relative/hybrid and absolute line number 
-mode when switching between normal and insert mode and when focus is lost or 
-gained.
+numbertoggle toggles between relative/hybrid and no line number modes.
 
 TRIGGER                                         *numbertoggle-trigger*
 
@@ -21,6 +20,6 @@ ABOUT                                           *numbertoggle-about*
 
 Grab the latest version or report a bug on GitHub:
 
-http://github.com/jeffkreeftmeijer/vim-numbertoggle
+http://github.com/marcindziedzic/vim-numbertoggle
 
  vim:tw=78:et:ft=help:norl:
